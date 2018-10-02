@@ -12,12 +12,14 @@ class Display
   end
 
   def render
-    self.board.grid.each do |row|
-      row.each do |piece|
-        print piece.name == nil ? " " : piece.name
+    self.board.grid.each_with_index do |row, x|
+      row.each_with_index do |piece, y|
+        print self.cursor if [x, y] == self.cursor.cursor_pos
+        print piece.name == nil ? " " : piece.name.yellow
       end
       puts "\n"
     end
+    "End"
   end
 
 end

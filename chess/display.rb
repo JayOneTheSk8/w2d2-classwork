@@ -12,14 +12,30 @@ class Display
   end
 
   def render
-    self.board.grid.each_with_index do |row, x|
-      row.each_with_index do |piece, y|
-        print self.cursor if [x, y] == self.cursor.cursor_pos
-        print piece.name == nil ? " " : piece.name.yellow
+    grid_maker.each { |row| puts row.join }
+    "end"
+  end
+
+  def grid_maker
+    self.board.grid.map.with_index do |row, x|
+      row.map.with_index do |piece, y|
+        bg_colour = set_colours([x, y])
+        piece.name.colorize(bg_colour)
       end
-      puts "\n"
     end
-    "End"
+  end
+
+  def set_colours(picked_pos)
+    if self.cursor.cursor_pos == picked_pos && self.cursor.selected
+      colour = :red
+    elsif self.cursor.cursor_pos == picked_pos
+      colour = :yellow
+    elsif picked_pos.reduce(:+).even?
+      colour = :white
+    else
+      color = :black
+    end
+    { background: colour }
   end
 
 end

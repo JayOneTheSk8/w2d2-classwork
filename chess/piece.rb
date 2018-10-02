@@ -4,13 +4,11 @@ class Piece
   def initialize(name = 'P')
     @name = name
   end
-
-
 end
 
 class NullPiece < Piece
 
   def initialize
-    @name = nil
+    @name = " "
   end
 end

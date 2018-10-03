@@ -9,7 +9,9 @@ class Board
 
   def initialize(grid = Board.start_board)
     @grid = grid
-    populate if grid.nil?
+    populate if grid.all? do |row|
+      row.all? { |piece| piece.is_a?(NullPiece) }
+    end
   end
 
   def populate

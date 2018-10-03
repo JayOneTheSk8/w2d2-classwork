@@ -46,7 +46,7 @@ class Display
     end
     system('clear')
     render
-    self.cursor.cursor_pos
+    # self.cursor.cursor_pos
   end
 
 end

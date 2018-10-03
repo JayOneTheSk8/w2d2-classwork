@@ -7,4 +7,5 @@ class Bishop < Piece
     super
     @name = "B"
   end
+
 end

@@ -4,12 +4,16 @@ class Board
   attr_accessor :grid
 
   def self.start_board
-    empty_board = Array.new(8) { Array.new(8, NullPiece.new) }
+    empty_board = Array.new(8) { Array.new(8, NullPiece.instance) }
   end
 
   def initialize(grid = Board.start_board)
     @grid = grid
-    populate if grid.all? do |row|
+    populate if empty?
+  end
+
+  def empty?
+    self.grid.all? do |row|
       row.all? { |piece| piece.is_a?(NullPiece) }
     end
   end

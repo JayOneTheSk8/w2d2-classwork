@@ -19,23 +19,24 @@ class Display
   def grid_maker
     self.board.grid.map.with_index do |row, x|
       row.map.with_index do |piece, y|
-        bg_colour = set_colours([x, y])
-        piece.to_s.colorize(bg_colour)
+        bg_color = set_colors([x, y])
+        color_hash = bg_color.merge({color: piece.color})
+        piece.to_s.colorize(color_hash)
       end
     end
   end
 
-  def set_colours(picked_pos)
+  def set_colors(picked_pos)
     if self.cursor.cursor_pos == picked_pos && self.cursor.selected
-      colour = :red
+      color = :red
     elsif self.cursor.cursor_pos == picked_pos
-      colour = :light_yellow
+      color = :light_yellow
     elsif picked_pos.reduce(:+).even?
-      colour = :white
+      color = :cyan
     else
-      color = :black
+      color = :blue
     end
-    { background: colour }
+    { background: color }
   end
 
   def run

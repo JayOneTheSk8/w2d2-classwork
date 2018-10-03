@@ -31,25 +31,25 @@ class Board
     end
   end
 
-  def set_castle_row(row, colour, row_num)
+  def set_castle_row(row, color, row_num)
     row.each_index do |pos|
       case pos
       when 0, 7
-        self[[row_num, pos]] = Rook.new(colour, self, [row_num, pos])
+        self[[row_num, pos]] = Rook.new(color, self, [row_num, pos])
       when 1, 6
-        self[[row_num, pos]] = Knight.new(colour, self, [row_num, pos])
+        self[[row_num, pos]] = Knight.new(color, self, [row_num, pos])
       when 2, 5
-        self[[row_num, pos]] = Bishop.new(colour, self, [row_num, pos])
+        self[[row_num, pos]] = Bishop.new(color, self, [row_num, pos])
       when 3
-        self[[row_num, pos]] = Queen.new(colour, self, [row_num, pos])
+        self[[row_num, pos]] = Queen.new(color, self, [row_num, pos])
       when 4
-        self[[row_num, pos]] = King.new(colour, self, [row_num, pos])
+        self[[row_num, pos]] = King.new(color, self, [row_num, pos])
       end
     end
   end
 
-  def set_pawns(row, colour, row_num)
-    row.each_index { |pos| self[[row_num, pos]] = Pawn.new(colour, self, [row_num, pos]) }
+  def set_pawns(row, color, row_num)
+    row.each_index { |pos| self[[row_num, pos]] = Pawn.new(color, self, [row_num, pos]) }
   end
 
   def []=(pos, val)

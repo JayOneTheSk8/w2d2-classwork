@@ -1,19 +1,53 @@
-require_relative 'piece'
+require_relative 'pieces'
 
 class Board
   attr_accessor :grid
 
   def self.start_board
     empty_board = Array.new(8) { Array.new(8, NullPiece.new) }
-    empty_board.each_index do |index|
-      unless index.between?(2, 5)
-        empty_board[index] = Array.new(8, Piece.new)
-      end
-    end
   end
 
   def initialize(grid = Board.start_board)
     @grid = grid
+    populate if grid.nil?
+  end
+
+  def populate
+    self.grid.each_with_index do |row, row_num|
+      case row_num
+      when 0
+        set_castle_row(row, :black, row_num)
+      when 1
+        set_pawns(row, :black, row_num)
+      when 6
+        set_pawns(row, :white, row_num)
+      when 7
+        set_castle_row(row, :white, row_num)
+      else
+        next
+      end
+    end
+  end
+
+  def set_castle_row(row, colour, row_num)
+    row.each_index do |pos|
+      case pos
+      when 0, 7
+        self[[row_num, pos]] = Rook.new(colour, self, [row_num, pos])
+      when 1, 6
+        self[[row_num, pos]] = Knight.new(colour, self, [row_num, pos])
+      when 2, 5
+        self[[row_num, pos]] = Bishop.new(colour, self, [row_num, pos])
+      when 3
+        self[[row_num, pos]] = Queen.new(colour, self, [row_num, pos])
+      when 4
+        self[[row_num, pos]] = King.new(colour, self, [row_num, pos])
+      end
+    end
+  end
+
+  def set_pawns(row, colour, row_num)
+    row.each_index { |pos| self[[row_num, pos]] = Pawn.new(colour, self, [row_num, pos]) }
   end
 
   def []=(pos, val)
@@ -23,7 +57,7 @@ class Board
 
   def [](pos)
     row, col = pos
-    grid[row][col]
+    self.grid[row][col]
   end
 
   def valid_pos?(pos)

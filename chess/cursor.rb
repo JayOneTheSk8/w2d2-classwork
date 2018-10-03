@@ -53,11 +53,6 @@ class Cursor
     handle_key(key)
   end
 
-  def cursor_loop
-
-    get_input
-  end
-
   private
 
   def read_char
